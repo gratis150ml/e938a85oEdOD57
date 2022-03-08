@@ -1,20 +1,18 @@
-$("form").submit(function(e){
-    e.preventDefault();
-    activate();
-});
-url = "https://api.agify.io/?name="
-const find = (name) => fetch(url+name)
-const activate = async() => {
+url = 'https://jsonplaceholder.typicode.com/users'
+$('form').on('submit', (e) => {
+    e.preventDefault()
+    search(url)
+})
+const search = async(url) => {
     try {
-        $('p').html('<div class="spinner-border text-danger" role="status"></div>')
-        const r = await find($('input').val())
-        const d = await r.json()
-        if(d.age) {
-            $('p').html(`Your age is: ${d.age}`)
-        } else {
-            $('p').html(`Something went wrong`)
-        }
+        let html = '<ul>'
+        let resp = await fetch(url)
+        let data = await resp.json()
+        data.map(d => html += `<li>${d.email}</li>`)
+        html += '</ul>'
+        $('p').html(html)
     } catch (err) {
-        console.log(err)
+        console.error(err)
     }
+
 }
