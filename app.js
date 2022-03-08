@@ -4,7 +4,7 @@ $("form").submit(function(e){
 });
 url = "https://api.agify.io/?name="
 const find = (name) => fetch(url+name)
-async function activate() {
+const activate = async() => {
     try {
         $('p').html('<div class="spinner-border text-danger" role="status"></div>')
         const r = await find($('input').val())
